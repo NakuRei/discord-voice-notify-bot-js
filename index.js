@@ -33,9 +33,45 @@ const client = new Client({
   intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates],
 });
 
+// チャンネルと権限の確認
+async function validateChannelsAndPermissions() {
+  try {
+    // ボイスチャンネルの確認
+    const voiceChannel = client.channels.cache.get(targetVoiceChannelId);
+    if (!voiceChannel) {
+      console.error('❌ Target voice channel not found');
+      console.error(`TARGET_VOICE_CHANNEL_ID: ${targetVoiceChannelId}`);
+      return;
+    }
+    console.log(`✅ Voice channel "${voiceChannel.name}" found`);
+
+    // テキストチャンネルの確認
+    const textChannel = client.channels.cache.get(notifyTextChannelId);
+    if (!textChannel) {
+      console.error('❌ Notification text channel not found');
+      console.error(`NOTIFY_TEXT_CHANNEL_ID: ${notifyTextChannelId}`);
+      return;
+    }
+
+    // メッセージ送信権限の確認
+    const permissions = textChannel.permissionsFor(client.user);
+    if (!permissions.has('SendMessages')) {
+      console.error('❌ Missing permission to send messages to text channel');
+      return;
+    }
+
+    console.log(
+      `✅ Send message permission confirmed for "${textChannel.name}"`
+    );
+  } catch (error) {
+    console.error('❌ Error during channel validation:', error);
+  }
+}
+
 // Discordクライアントの準備完了イベント
 client.once('ready', () => {
   console.log(`✅ Logged in as ${client.user.tag}`);
+  validateChannelsAndPermissions();
 });
 
 // Discord接続エラーの処理
