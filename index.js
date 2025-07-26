@@ -121,7 +121,6 @@ client.on('voiceStateUpdate', (oldState, newState) => {
         `🔔 ${newState.member.displayName} が ` +
           `VC「${newState.channel.name}」に参加しました`
       )
-      .setDescription(`<#${newState.channel.id}>`)
       .setTimestamp()
       .setColor('#486547');
     sendNotification(newState, embed);
