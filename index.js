@@ -81,3 +81,52 @@ client
     console.error('❌ Failed to log in:', error);
     process.exit(1);
   });
+
+// プロセス終了時の処理
+process.on('SIGINT', async () => {
+  console.log('\n🛑 Bot is shutting down...');
+  try {
+    await client.destroy();
+    console.log('✅ Bot has been shut down gracefully');
+    process.exit(0);
+  } catch (error) {
+    console.error('❌ Error during shutdown:', error);
+    process.exit(1);
+  }
+});
+process.on('SIGTERM', async () => {
+  console.log('\n🛑 Bot is shutting down...');
+  try {
+    await client.destroy();
+    console.log('✅ Bot has been shut down gracefully');
+    process.exit(0);
+  } catch (error) {
+    console.error('❌ Error during shutdown:', error);
+    process.exit(1);
+  }
+});
+
+// 未処理の例外や拒否の処理
+process.on('uncaughtException', async (error) => {
+  console.error('❌ Uncaught exception:', error);
+  try {
+    await client.destroy();
+    console.log('🛑 Client destroyed after uncaught exception');
+  } catch (destroyError) {
+    console.error('⚠️ Failed to destroy client cleanly:', destroyError);
+  } finally {
+    process.exit(1);
+  }
+});
+process.on('unhandledRejection', async (reason, promise) => {
+  console.error('❌ Unhandled promise rejection:', reason);
+  console.error('Promise:', promise);
+  try {
+    await client.destroy();
+    console.log('🛑 Client destroyed after unhandled rejection');
+  } catch (destroyError) {
+    console.error('⚠️ Failed to destroy client cleanly:', destroyError);
+  } finally {
+    process.exit(1);
+  }
+});
