@@ -90,7 +90,7 @@ client.on('warn', (warning) => {
 });
 
 // 通知メッセージの送信
-async function sendNotification(newState, embed) {
+async function sendNotification(embed) {
   try {
     const notifyChannel = client.channels.cache.get(notifyTextChannelId);
 
@@ -100,7 +100,7 @@ async function sendNotification(newState, embed) {
     }
 
     await notifyChannel.send({ embeds: [embed] });
-    console.log(`Notification sent: ${newState.member.displayName}`);
+    console.log(`Notification sent: ${embed.toJSON().title}`);
   } catch (error) {
     console.error('❌ Failed to send notification:', error);
   }
@@ -123,7 +123,7 @@ client.on('voiceStateUpdate', (oldState, newState) => {
       )
       .setTimestamp()
       .setColor('#486547');
-    sendNotification(newState, embed);
+    sendNotification(embed);
   }
 });
 
