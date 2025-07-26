@@ -28,10 +28,12 @@ validateEnvironment();
 const targetVoiceChannelId = process.env.TARGET_VOICE_CHANNEL_ID;
 const notifyTextChannelId = process.env.NOTIFY_TEXT_CHANNEL_ID;
 
+// Discordクライアントの初期化
 const client = new Client({
   intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates],
 });
 
+// Discordクライアントの準備完了イベント
 client.once('ready', () => {
   console.log(`✅ Logged in as ${client.user.tag}`);
 });
@@ -72,6 +74,7 @@ client.on('voiceStateUpdate', (oldState, newState) => {
   }
 });
 
+// Discordにログイン
 client
   .login(process.env.DISCORD_TOKEN)
   .then(() => {
