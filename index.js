@@ -36,6 +36,16 @@ client.once('ready', () => {
   console.log(`✅ Logged in as ${client.user.tag}`);
 });
 
+// Discord接続エラーの処理
+client.on('error', (error) => {
+  console.error('❌ Discord client error occurred:', error);
+});
+
+// 警告の処理
+client.on('warn', (warning) => {
+  console.warn('⚠️ Warning:', warning);
+});
+
 client.on('voiceStateUpdate', (oldState, newState) => {
   // ユーザーがボイスチャンネルに入室した場合
   if (!oldState.channel && newState.channel) {
