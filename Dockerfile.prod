@@ -1,0 +1,24 @@
+# === Build Stage ===
+FROM node:24-bookworm-slim AS build
+
+# Create non-root user and set permissions
+RUN useradd -m botuser
+WORKDIR /home/botuser/app
+COPY package*.json ./
+RUN npm ci --omit=dev
+COPY . .
+
+# === Runtime Stage ===
+FROM gcr.io/distroless/nodejs24-debian12
+
+# Copy built app from previous stage
+COPY --chown=nonroot:nonroot --from=build /home/botuser/app /home/botuser/app
+
+# Set working directory
+WORKDIR /home/botuser/app
+
+# Use non-root user provided by distroless (UID 65532)
+USER nonroot
+
+# Default command
+CMD ["index.js"]

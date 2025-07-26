@@ -1,0 +1,23 @@
+FROM node:24-bookworm-slim
+
+# Install git
+RUN apt-get update -y \
+  && DEBIAN_FRONTEND=noninteractive \
+  apt-get install -y --no-install-recommends \
+  ca-certificates \
+  git \
+  openssh-client \
+  gnupg \
+  && update-ca-certificates \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/*
+
+# Create non-root user
+RUN useradd -m botuser
+RUN mkdir -p /home/botuser/app && chown -R botuser:botuser /home/botuser/app
+
+# Set working directory
+WORKDIR /home/botuser/app
+
+# Switch to non-root user
+USER botuser

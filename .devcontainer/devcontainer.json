@@ -1,0 +1,16 @@
+{
+  "name": "discord-voice-notify-bot-js",
+  "dockerComposeFile": "../compose.dev.yaml",
+  "service": "bot",
+  "workspaceFolder": "/home/botuser/app",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true,
+        "eslint.validate": ["javascript", "typescript"]
+      },
+      "extensions": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode"]
+    }
+  }
+}

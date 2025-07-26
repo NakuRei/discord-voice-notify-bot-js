@@ -1,0 +1,13 @@
+services:
+  bot:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - .:/home/botuser/app:cached
+    environment:
+      - NODE_ENV=development
+    env_file:
+      - .env.dev
+    tty: true
+    command: sleep infinity

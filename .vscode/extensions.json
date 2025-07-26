@@ -1,0 +1,13 @@
+{
+  "recommendations": [
+    "streetsidesoftware.code-spell-checker",
+    "ms-azuretools.vscode-docker",
+    "igorsbitnev.error-gutters",
+    "mhutchie.git-graph",
+    "donjayamanne.githistory",
+    "wdhongtw.gpg-indicator",
+    "fabiospampinato.vscode-highlight",
+    "oderwat.indent-rainbow",
+    "gruntfuggly.todo-tree"
+  ]
+}
