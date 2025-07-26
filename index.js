@@ -1,4 +1,4 @@
-const { Client, GatewayIntentBits } = require('discord.js');
+const { Client, GatewayIntentBits, EmbedBuilder } = require('discord.js');
 
 console.log(`Using environment: ${process.env.NODE_ENV}`);
 const targetVoiceChannelId = process.env.TARGET_VOICE_CHANNEL_ID;
@@ -23,9 +23,14 @@ client.on('voiceStateUpdate', (oldState, newState) => {
     // 入室を検知したボイスチャンネルのIDと一致する場合のみ通知
     const notifyChannel = client.channels.cache.get(notifyTextChannelId);
     if (notifyChannel) {
-      notifyChannel.send(
-        `🔔 ${newState.member.displayName} が VC「${newState.channel.name}」に参加しました`
-      );
+      const embed = new EmbedBuilder()
+        .setTitle(
+          `🔔 ${newState.member.displayName} が ` +
+            `VC<#${targetVoiceChannelId}>に参加しました`
+        )
+        .setTimestamp()
+        .setColor('#486547');
+      notifyChannel.send({ embeds: [embed] });
     }
   }
 });
