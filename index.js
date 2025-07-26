@@ -74,4 +74,12 @@ client.on('voiceStateUpdate', (oldState, newState) => {
   }
 });
 
-client.login(process.env.DISCORD_TOKEN);
+client
+  .login(process.env.DISCORD_TOKEN)
+  .then(() => {
+    console.log('✅ Bot logged in successfully');
+  })
+  .catch((error) => {
+    console.error('❌ Failed to log in:', error);
+    process.exit(1);
+  });
