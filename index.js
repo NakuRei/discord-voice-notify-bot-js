@@ -1,4 +1,9 @@
-const { Client, GatewayIntentBits, EmbedBuilder } = require('discord.js');
+const {
+  Client,
+  GatewayIntentBits,
+  EmbedBuilder,
+  PermissionFlagsBits,
+} = require('discord.js');
 
 console.log(`Using environment: ${process.env.NODE_ENV}`);
 
@@ -55,7 +60,7 @@ async function validateChannelsAndPermissions() {
 
     // メッセージ送信権限の確認
     const permissions = textChannel.permissionsFor(client.user);
-    if (!permissions.has('SendMessages')) {
+    if (!permissions.has(PermissionFlagsBits.SendMessages)) {
       console.error('❌ Missing permission to send messages to text channel');
       return;
     }
