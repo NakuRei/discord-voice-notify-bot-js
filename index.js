@@ -57,19 +57,17 @@ client.on('voiceStateUpdate', (oldState, newState) => {
     // 入室を検知したボイスチャンネルのIDと一致する場合のみ通知
     const notifyChannel = client.channels.cache.get(notifyTextChannelId);
     if (notifyChannel) {
-      try {
-        const embed = new EmbedBuilder()
-          .setTitle(
-            `🔔 ${newState.member.displayName} が ` +
-              `VC「${newState.channel.name}」に参加しました`
-          )
-          .setDescription(`<#${newState.channel.id}>`)
-          .setTimestamp()
-          .setColor('#486547');
-        notifyChannel.send({ embeds: [embed] });
-      } catch (error) {
-        console.error('メッセージの送信に失敗しました:', error);
-      }
+      const embed = new EmbedBuilder()
+        .setTitle(
+          `🔔 ${newState.member.displayName} が ` +
+            `VC「${newState.channel.name}」に参加しました`
+        )
+        .setDescription(`<#${newState.channel.id}>`)
+        .setTimestamp()
+        .setColor('#486547');
+      notifyChannel.send({ embeds: [embed] }).catch((error) => {
+        console.error('❌ Failed to send message:', error);
+      });
     }
   }
 });
