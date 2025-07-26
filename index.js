@@ -48,6 +48,24 @@ client.on('warn', (warning) => {
   console.warn('⚠️ Warning:', warning);
 });
 
+// 通知メッセージの送信
+async function sendNotification(newState, embed) {
+  try {
+    const notifyChannel = client.channels.cache.get(notifyTextChannelId);
+
+    if (!notifyChannel) {
+      console.error('❌ Notification channel not found');
+      return;
+    }
+
+    await notifyChannel.send({ embeds: [embed] });
+    console.log(`Notification sent: ${newState.member.displayName}`);
+  } catch (error) {
+    console.error('❌ Failed to send notification:', error);
+  }
+}
+
+// ボイスチャンネルの状態更新イベント
 client.on('voiceStateUpdate', (oldState, newState) => {
   // ユーザーがボイスチャンネルに入室した場合
   if (!oldState.channel && newState.channel) {
@@ -57,20 +75,15 @@ client.on('voiceStateUpdate', (oldState, newState) => {
     }
 
     // 入室を検知したボイスチャンネルのIDと一致する場合のみ通知
-    const notifyChannel = client.channels.cache.get(notifyTextChannelId);
-    if (notifyChannel) {
-      const embed = new EmbedBuilder()
-        .setTitle(
-          `🔔 ${newState.member.displayName} が ` +
-            `VC「${newState.channel.name}」に参加しました`
-        )
-        .setDescription(`<#${newState.channel.id}>`)
-        .setTimestamp()
-        .setColor('#486547');
-      notifyChannel.send({ embeds: [embed] }).catch((error) => {
-        console.error('❌ Failed to send message:', error);
-      });
-    }
+    const embed = new EmbedBuilder()
+      .setTitle(
+        `🔔 ${newState.member.displayName} が ` +
+          `VC「${newState.channel.name}」に参加しました`
+      )
+      .setDescription(`<#${newState.channel.id}>`)
+      .setTimestamp()
+      .setColor('#486547');
+    sendNotification(newState, embed);
   }
 });
 
