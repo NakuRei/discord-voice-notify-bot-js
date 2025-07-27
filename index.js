@@ -106,8 +106,21 @@ async function sendNotification(embed) {
   }
 }
 
+// 通知時間のチェック
+function isWithinNotificationHours(startHour, endHour) {
+  const now = new Date();
+  const hour = now.getHours(); // 0〜23
+  return hour >= startHour && hour < endHour;
+}
+
 // ボイスチャンネルの状態更新イベント
 client.on('voiceStateUpdate', (oldState, newState) => {
+  // 通知時間外ならなにもしない
+  if (!isWithinNotificationHours(0, 7)) {
+    console.log('⏰ Notification time is outside of allowed hours');
+    return;
+  }
+
   // ユーザーがボイスチャンネルに入室した場合
   if (!oldState.channel && newState.channel) {
     // 入室を検知したいボイスチャンネルのIDと一致しないならなにもしない
