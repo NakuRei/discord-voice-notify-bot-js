@@ -1,5 +1,6 @@
 services:
   bot:
+    container_name: discord-voice-notify-bot-js-prod
     build:
       context: .
       dockerfile: Dockerfile.prod
