@@ -73,7 +73,7 @@ async function validateChannelsAndPermissions() {
   }
 }
 
-// Discordクライアントの準備完了イベント
+// Botの準備完了イベント
 client.once('ready', () => {
   console.log(`✅ Logged in as ${client.user.tag}`);
   validateChannelsAndPermissions();
@@ -127,7 +127,7 @@ client.on('voiceStateUpdate', (oldState, newState) => {
   }
 });
 
-// Discordにログイン
+// BotをDiscordにログイン
 client
   .login(process.env.DISCORD_TOKEN)
   .then(() => {
