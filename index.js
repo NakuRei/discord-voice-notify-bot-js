@@ -124,7 +124,7 @@ client.on('voiceStateUpdate', (oldState, newState) => {
     const embed = new EmbedBuilder()
       .setTitle(
         `🔔 ${newState.member.displayName} が ` +
-          `VC「${newState.channel.name}」に参加しました`
+        `VC「${newState.channel.name}」に参加しました`
       )
       .setTimestamp()
       .setColor('#486547');
