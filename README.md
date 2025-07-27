@@ -39,6 +39,12 @@ Botが起動した状態で指定したボイスチャンネルに人が入る�
 docker compose -f compose.prod.yaml down
 ```
 
+ログは次のコマンドで確認できる。
+
+```bash
+docker compose -f compose.prod.yaml logs -f
+```
+
 ## Author
 
 - [NakuRei](https://github.com/NakuRei)
