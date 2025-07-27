@@ -8,3 +8,8 @@ services:
       - NODE_ENV=production
     env_file:
       - .env.prod
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '3'
