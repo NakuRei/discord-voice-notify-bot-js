@@ -116,7 +116,7 @@ function isWithinNotificationHours(startHour, endHour) {
 // ボイスチャンネルの状態更新イベント
 client.on('voiceStateUpdate', (oldState, newState) => {
   // 通知時間外ならなにもしない
-  if (!isWithinNotificationHours(0, 7)) {
+  if (!isWithinNotificationHours(7, 24)) {
     console.log('⏰ Notification time is outside of allowed hours');
     return;
   }
