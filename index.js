@@ -115,6 +115,11 @@ client.on('voiceStateUpdate', (oldState, newState) => {
       return;
     }
 
+    // ボットは無視
+    if (newState.member.user.bot) {
+      return;
+    }
+
     // 入室を検知したボイスチャンネルのIDと一致する場合のみ通知
     const embed = new EmbedBuilder()
       .setTitle(
